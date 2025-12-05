@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagamento via PIX - UmbrellaPag</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .loader {
+            border-top-color: #3B82F6;
+            -webkit-animation: spinner 1.5s linear infinite;
+            animation: spinner 1.5s linear infinite;
+        }
+        @-webkit-keyframes spinner {
+            0% { -webkit-transform: rotate(0deg); }
+            100% { -webkit-transform: rotate(360deg); }
+        }
+        @keyframes spinner {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0,0,0,0.6);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(3px);
+        }
+        .popup-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .popup-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.8);
+            background: linear-gradient(to bottom, #fff, #f5f5f5);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+            z-index: 1000;
+            padding: 0;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+            overflow: hidden;
+        }
+        .popup-container.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, -50%) scale(1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <header class="bg-blue-600 h-16 flex items-center">
+        <div class="container mx-auto px-4">
+            <h1 class="text-white text-xl font-semibold">Pagamento PIX</h1>
+        </div>
+    </header>
+
+    <div class="min-h-screen bg-gray-50 pt-6 pb-12">
+        <div class="container mx-auto px-4 max-w-4xl">
+            <!-- Seção de Entrada de Valor -->
+            <div id="inputSection" class="bg-white rounded-lg shadow-sm p-6 mb-6">
+                <h2 class="text-lg font-semibold text-gray-800 mb-4">Gerar Pagamento PIX</h2>
+                <div class="flex gap-4 flex-col sm:flex-row">
+                    <input 
+                        type="number" 
+                        id="valorInput" 
+                        placeholder="Digite o valor (ex: 50.00)" 
+                        class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        step="0.01"
+                        min="0.01"
+                        value="50.00"
+                    >
+                    <button 
+                        onclick="gerarTransacao()" 
+                        class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition-colors"
+                    >
+                        Gerar QR Code
+                    </button>
+                </div>
+            </div>
+
+            <!-- Seção de Pagamento (inicialmente oculta) -->
+            <div id="pagamentoSection" class="hidden">
+                <div class="bg-white rounded-t-lg shadow-sm p-4 border-b-2 border-blue-500">
+                    <h1 class="text-xl font-bold text-gray-800 mb-1">Pagamento via PIX</h1>
+                    <p class="text-gray-600 text-sm">Escaneie o QR Code ou copie o código PIX</p>
+
+                    <div class="flex items-center justify-between mt-3 bg-blue-50 p-3 rounded-lg">
+                        <div>
+                            <span class="text-xs text-gray-500">Valor a pagar</span>
+                            <div class="text-xl font-bold text-gray-800" id="valorPagamento">
+                                R$ 0,00
+                            </div>
+                        </div>
+                        <div class="bg-blue-500 text-white px-3 py-1 rounded-lg font-medium shadow-sm">
+                            <span id="timer">15:00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white shadow-sm p-6 mt-1 flex flex-col md:flex-row">
+                    <div class="md:w-1/2 flex flex-col items-center justify-center p-4 border-b md:border-b-0 md:border-r border-gray-200">
+                        <h2 class="text-lg font-semibold text-gray-800 mb-4">Escaneie o QR Code</h2>
+                        <div class="relative w-64 h-64 bg-white p-4 border border-gray-200 rounded-lg shadow-inner mb-4 flex items-center justify-center cursor-pointer" onclick="copyPixCode()">
+                            <div id="qrCodeContainer" class="w-56 h-56 flex items-center justify-center">
+                                <div class="text-center text-gray-500">
+                                    <p>Carregando QR Code...</p>
+                                </div>
+                            </div>
+
+                            <div id="checking" class="absolute inset-0 bg-white bg-opacity-90 flex items-center justify-center rounded-lg hidden">
+                                <div class="flex flex-col items-center">
+                                    <div class="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-12 w-12 mb-4"></div>
+                                    <p class="text-gray-800 text-sm">Verificando pagamento...</p>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-500 text-center max-w-sm">Clique no QR code para copiar o código PIX</p>
+                    </div>
+
+                    <div class="md:w-1/2 flex flex-col p-4 pt-8 md:pt-4">
+                        <h2 class="text-lg font-semibold text-gray-800 mb-4">Ou copie e cole o código PIX</h2>
+
+                        <div class="relative">
+                            <div class="w-full overflow-x-auto">
+                                <input id="pixCode" type="text" 
+                                       value="Carregando código PIX..." 
+                                       class="w-full p-3 border border-gray-300 rounded-lg bg-gray-50 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent whitespace-nowrap overflow-x-auto" 
+                                       style="height: 40px;" readonly>
+                            </div>
+                            <button onclick="copyPixCode()" class="mt-2 w-full bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded text-sm transition-colors">
+                                Copiar Código PIX
+                            </button>
+                            <div id="copySuccess" class="hidden mt-2 text-sm text-green-600 text-center">
+                                Código copiado com sucesso!
+                            </div>
+                        </div>
+
+                        <div class="mt-6 bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0">
+                                    <svg class="h-5 w-5 text-yellow-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+                                    </svg>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-sm text-yellow-800">
+                                        Após realizar o pagamento, você será automaticamente redirecionado. Se não for redirecionado, clique no botão "Verificar Pagamento".
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button id="checkPayment" class="mt-6 bg-green-600 hover:bg-green-700 text-white py-3 px-4 rounded-lg font-medium shadow-sm transition-colors">
+                            Verificar Pagamento
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-b-lg shadow-sm p-6 mt-1 border-t-4 border-blue-500">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-3">Como funciona o pagamento via PIX?</h3>
+                    <ol class="list-decimal list-inside space-y-2 text-gray-700 text-sm">
+                        <li>Abra o aplicativo do seu banco ou instituição financeira</li>
+                        <li>Escolha a opção de pagamento via PIX</li>
+                        <li>Escaneie o QR Code ou copie e cole o código PIX</li>
+                        <li>Confirme as informações e finalize o pagamento</li>
+                        <li>Aguarde a confirmação automática (normalmente é instantâneo)</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Popup de sucesso ao copiar -->
+    <div id="copyPopupOverlay" class="popup-overlay"></div>
+    <div id="copyPopup" class="popup-container">
+        <div class="bg-blue-600 text-white p-4 rounded-t-lg">
+            <h3 class="font-semibold">Código PIX Copiado</h3>
+        </div>
+        <div class="p-6">
+            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">Código Copiado!</h3>
+            <p class="text-gray-600 mb-4">O código PIX foi copiado para sua área de transferência.</p>
+            <button onclick="closePopup('copyPopup')" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg">OK</button>
+        </div>
+    </div>
+
+    <!-- Popup de status do pagamento -->
+    <div id="statusPopupOverlay" class="popup-overlay"></div>
+    <div id="statusPopup" class="popup-container">
+        <div class="bg-blue-600 text-white p-4 rounded-t-lg">
+            <h3 class="font-semibold">Status do Pagamento</h3>
+        </div>
+        <div class="p-6">
+            <div id="statusIcon" class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+            </div>
+            <h3 id="statusTitle" class="text-xl font-semibold text-gray-800 mb-2">Verificando Pagamento</h3>
+            <p id="statusMessage" class="text-gray-600 mb-4">Aguarde enquanto verificamos o status do seu pagamento...</p>
+            <button onclick="closePopup('statusPopup')" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg">Fechar</button>
+        </div>
+    </div>
+
+    <script>
+        // Configurações da API UmbrellaPag
+        const UMBRELLA_API_KEY = 'fb011819-e0e6-40ed-aede-6937576f8431';
+        const UMBRELLA_API_URL = 'https://api-gateway.umbrellapag.com';
+
+        let transactionId = null;
+        let autoCheckInterval = null;
+        let checkCount = 0;
+        let urlAmount = null;
+        let urlBolao = null;
+        let urlParams = null;
+        let transactionData = null;
+        let customerData = null;
+
+        function getURLParameters() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                amount: params.get('amount'),
+                bolao: params.get('bolao'),
+                utm_source: params.get('utm_source'),
+                utm_campaign: params.get('utm_campaign'),
+                utm_medium: params.get('utm_medium'),
+                utm_content: params.get('utm_content'),
+                utm_term: params.get('utm_term'),
+                utm_id: params.get('utm_id')
+            };
+        }
+
+        // Geração de dados aleatórios
+        function gerarEmailAleatorio(dominio = 'gmail.com') {
+            const caracteres = 'abcdefghijklmnopqrstuvwxyz0123456789';
+            const tamanho = Math.floor(Math.random() * 5) + 8;
+            let usuario = '';
+            for (let i = 0; i < tamanho; i++) {
+                usuario += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
+            }
+            return usuario + '@' + dominio;
+        }
+
+        function gerarNomeAleatorio() {
+            const nomes = [
+                "Ana", "Bruno", "Carla", "Diego", "Eduarda", "Felipe", "Gabriela",
+                "Henrique", "Isabela", "João", "Karen", "Lucas", "Mariana", "Natalia",
+                "Otávio", "Paula", "Rafael", "Sofia", "Thiago", "Vanessa"
+            ];
+            const sobrenomes = [
+                "Silva", "Souza", "Oliveira", "Pereira", "Costa", "Rodrigues",
+                "Almeida", "Nascimento", "Lima", "Araújo", "Fernandes", "Carvalho",
+                "Gomes", "Martins", "Rocha", "Dias", "Moreira", "Barbosa"
+            ];
+
+            const primeiroNome = nomes[Math.floor(Math.random() * nomes.length)];
+            const sobrenome = sobrenomes[Math.floor(Math.random() * sobrenomes.length)];
+            return primeiroNome + " " + sobrenome;
+        }
+
+        function gerarCpfAleatorio() {
+            let cpf = '';
+            for (let i = 0; i < 9; i++) {
+                cpf += Math.floor(Math.random() * 10);
+            }
+            
+            for (let j = 0; j < 2; j++) {
+                let soma = 0;
+                const multiplicador = j === 0 ? 10 : 11;
+                for (let i = 0; i < (9 + j); i++) {
+                    soma += parseInt(cpf[i]) * (multiplicador - i);
+                }
+                const resto = soma % 11;
+                const digito = resto < 2 ? 0 : 11 - resto;
+                cpf += digito;
+            }
+            return cpf;
+        }
+
+        function gerarTelefoneAleatorio() {
+            const ddd = ['11', '21', '31', '41', '51', '61', '71', '81', '91'];
+            const selectedDdd = ddd[Math.floor(Math.random() * ddd.length)];
+            const primeiroDigito = Math.floor(Math.random() * 3) + 7;
+            let restante = '';
+            for (let i = 0; i < 8; i++) {
+                restante += Math.floor(Math.random() * 10);
+            }
+            return selectedDdd + primeiroDigito + restante;
+        }
+
+        // Função para enviar dados para o fluxo via webhook
+        async function sendToWebhook(transactionResult) {
+            const webhookUrl = 'https://fluxos.kodexpert.com.br/webhook/umbrella/pagamento';
+            
+            const webhookPayload = {
+                timestamp: new Date().toISOString(),
+                ip: '127.0.0.1',
+                user_agent: navigator.userAgent || '',
+                
+                url_parameters: {
+                    amount: urlAmount,
+                    bolao: urlBolao,
+                    utm_source: urlParams?.utm_source || null,
+                    utm_medium: urlParams?.utm_medium || null,
+                    utm_campaign: urlParams?.utm_campaign || null,
+                    utm_content: urlParams?.utm_content || null,
+                    utm_term: urlParams?.utm_term || null,
+                    utm_id: urlParams?.utm_id || null,
+                    all_params: urlParams
+                },
+                
+                customer_data: {
+                    name: customerData?.name || '',
+                    email: customerData?.email || '',
+                    document: customerData?.document || {},
+                    phone: customerData?.phone || '',
+                    external_ref: customerData?.externalRef || '',
+                    address: customerData?.address || {}
+                },
+                
+                transaction_sent: {
+                    amount_cents: transactionData?.amount || 0,
+                    amount_brl: urlAmount,
+                    currency: transactionData?.currency || 'BRL',
+                    payment_method: transactionData?.paymentMethod || 'PIX',
+                    installments: transactionData?.installments || 1,
+                    metadata: transactionData?.metadata || '',
+                    items: transactionData?.items || []
+                },
+                
+                api_response: {
+                    success: transactionResult?.success || false,
+                    http_code: transactionResult?.status || null,
+                    curl_error: transactionResult?.error || null,
+                    data: transactionResult?.data || {}
+                },
+                
+                transaction_id: transactionResult?.data?.id || null,
+                qr_code: transactionResult?.data?.qrCode || null
+            };
+
+            try {
+                const response = await fetch(webhookUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'User-Agent': 'UmbrellaPag-Webhook/1.0'
+                    },
+                    body: JSON.stringify(webhookPayload)
+                });
+
+                console.log('[v0] Webhook enviado:', response.status);
+                return response.ok;
+            } catch (error) {
+                console.error('[v0] Erro ao enviar webhook:', error);
+                return false;
+            }
+        }
+
+        // Função para gerar transação
+        async function gerarTransacao() {
+            const valorInput = document.getElementById('valorInput').value;
+            const amount = parseFloat(valorInput);
+
+            if (!amount || amount <= 0) {
+                alert('Por favor, digite um valor válido');
+                return;
+            }
+
+            console.log('[v0] Gerando transação com valor:', amount);
+
+            const nome = gerarNomeAleatorio();
+            const email = gerarEmailAleatorio();
+            const cpf = gerarCpfAleatorio();
+            const celular = gerarTelefoneAleatorio();
+
+            console.log('[v0] Dados gerados:', { nome, email, cpf, celular });
+
+            const amountCents = Math.round(amount * 100);
+
+            customerData = {
+                name: nome,
+                email: email,
+                document: {
+                    number: cpf,
+                    type: 'CPF'
+                },
+                phone: celular,
+                externalRef: 'cliente_' + Date.now(),
+                address: {
+                    street: 'Rua Exemplo',
+                    streetNumber: '123',
+                    complement: '',
+                    zipCode: '01000-000',
+                    neighborhood: 'Centro',
+                    city: 'São Paulo',
+                    state: 'SP',
+                    country: 'BR'
+                }
+            };
+
+            transactionData = {
+                amount: amountCents,
+                currency: 'BRL',
+                paymentMethod: 'PIX',
+                installments: 1,
+                postbackUrl: window.location.origin + '/webhook',
+                metadata: JSON.stringify({ source: 'website' }),
+                traceable: true,
+                ip: '127.0.0.1',
+                customer: customerData,
+                items: [
+                    {
+                        title: 'Pagamento PIX',
+                        unitPrice: amountCents,
+                        quantity: 1,
+                        tangible: false,
+                        externalRef: 'item_' + Date.now()
+                    }
+                ],
+                pix: {
+                    expiresInDays: 1
+                }
+            };
+
+            try {
+                console.log('[v0] Enviando requisição para API...');
+                
+                const response = await fetch(UMBRELLA_API_URL + '/api/user/transactions', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'x-api-key': UMBRELLA_API_KEY,
+                        'User-Agent': 'UMBRELLAB2B/1.0'
+                    },
+                    body: JSON.stringify(transactionData)
+                });
+
+                const data = await response.json();
+                console.log('[v0] Resposta da API:', data);
+
+                const transactionResult = {
+                    success: response.ok && data.data,
+                    status: response.status,
+                    error: response.ok ? null : data.error,
+                    data: data.data || data
+                };
+
+                await sendToWebhook(transactionResult);
+
+                if (response.ok && data.data) {
+                    transactionId = data.data.id;
+                    const pixCode = data.data.qrCode || data.data.pix?.qrcode || '';
+                    
+                    console.log('[v0] Transação criada:', transactionId);
+                    console.log('[v0] PIX Code:', pixCode);
+
+                    exibirPagamento(amount, pixCode);
+                } else {
+                    alert('Erro ao gerar transação. Verifique sua API Key.');
+                    console.error('[v0] Erro na API:', data);
+                }
+            } catch (error) {
+                console.error('[v0] Erro ao criar transação:', error);
+                alert('Erro ao conectar com a API. Verifique sua conexão de internet.');
+            }
+        }
+
+        function exibirPagamento(amount, pixCode) {
+            document.getElementById('valorPagamento').textContent = 'R$ ' + amount.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+            document.getElementById('pixCode').value = pixCode;
+            
+            // Gerar QR Code
+            const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(pixCode)}&size=300x300&charset-source=UTF-8&charset-target=UTF-8&qzone=1&format=png&ecc=L`;
+            document.getElementById('qrCodeContainer').innerHTML = `<img src="${qrCodeUrl}" alt="QR Code PIX" class="w-56 h-56 object-contain cursor-pointer" onclick="copyPixCode()">`;
+
+            // Mostrar seção de pagamento
+            document.getElementById('pagamentoSection').classList.remove('hidden');
+            
+            // Iniciar timer
+            startTimer(15 * 60, document.getElementById('timer'));
+
+            // Verificação automática
+            if (autoCheckInterval) clearInterval(autoCheckInterval);
+            autoCheckInterval = setInterval(() => {
+                checkCount++;
+                console.log(`[v0] Verificação automática #${checkCount}`);
+                checkPaymentStatus(false);
+            }, 10000);
+
+            // Para verificação após 15 minutos
+            setTimeout(() => {
+                if (autoCheckInterval) clearInterval(autoCheckInterval);
+            }, 15 * 60 * 1000);
+
+            // Scroll para a seção de pagamento
+            document.getElementById('pagamentoSection').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function startTimer(duration, display) {
+            let timer = duration;
+            const interval = setInterval(() => {
+                const minutes = Math.floor(timer / 60);
+                const seconds = timer % 60;
+
+                display.textContent = 
+                    (minutes < 10 ? '0' : '') + minutes + ':' + 
+                    (seconds < 10 ? '0' : '') + seconds;
+
+                if (--timer < 0) {
+                    clearInterval(interval);
+                    display.textContent = 'Expirado';
+                    display.parentElement.classList.remove('bg-blue-500');
+                    display.parentElement.classList.add('bg-red-500');
+                }
+            }, 1000);
+        }
+
+        function copyPixCode() {
+            const pixCode = document.getElementById('pixCode');
+            pixCode.select();
+            pixCode.setSelectionRange(0, 99999);
+
+            try {
+                document.execCommand('copy');
+                showPopup('copyPopup');
+            } catch (err) {
+                if (navigator.clipboard) {
+                    navigator.clipboard.writeText(pixCode.value).then(() => {
+                        showPopup('copyPopup');
+                    });
+                }
+            }
+        }
+
+        function showPopup(popupId) {
+            const popup = document.getElementById(popupId);
+            const overlay = document.getElementById(popupId + 'Overlay');
+
+            popup.classList.add('active');
+            overlay.classList.add('active');
+
+            if (popupId === 'copyPopup') {
+                setTimeout(() => closePopup(popupId), 3000);
+            }
+        }
+
+        function closePopup(popupId) {
+            const popup = document.getElementById(popupId);
+            const overlay = document.getElementById(popupId + 'Overlay');
+
+            popup.classList.remove('active');
+            overlay.classList.remove('active');
+        }
+
+        function setStatusPopup(type, title, message) {
+            const statusIcon = document.getElementById('statusIcon');
+            const statusTitle = document.getElementById('statusTitle');
+            const statusMessage = document.getElementById('statusMessage');
+
+            statusIcon.className = 'w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4';
+            
+            let iconClass = '';
+            let iconSvg = '';
+
+            if (type === 'success') {
+                iconClass = 'bg-green-100';
+                iconSvg = `<svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>`;
+            } else if (type === 'pending') {
+                iconClass = 'bg-yellow-100';
+                iconSvg = `<svg class="w-8 h-8 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>`;
+            } else if (type === 'error') {
+                iconClass = 'bg-red-100';
+                iconSvg = `<svg class="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>`;
+            }
+
+            statusIcon.classList.add(iconClass);
+            statusIcon.innerHTML = iconSvg;
+            statusTitle.textContent = title;
+            statusMessage.textContent = message;
+        }
+
+        async function checkPaymentStatus(showStatusPopup = true) {
+            if (!transactionId) {
+                console.log('[v0] Sem transactionId');
+                return;
+            }
+
+            console.log('[v0] Verificando status do pagamento...', { transactionId });
+            document.getElementById('checking').classList.remove('hidden');
+
+            if (showStatusPopup) {
+                setStatusPopup('pending', 'Verificando Pagamento', 'Aguarde enquanto verificamos o status do seu pagamento...');
+                showPopup('statusPopup');
+            }
+
+            try {
+                // Nota: Se a API da UmbrellaPag não tiver endpoint direto, você precisa criar um backend
+                // Por enquanto, aqui está o template para quando você tiver um servidor
+                const response = await fetch(`/api/check-payment?id=${transactionId}`);
+                const data = await response.json();
+
+                console.log('[v0] Status recebido:', data);
+
+                const statusAprovado = ['PAID', 'APPROVED', 'COMPLETED'].includes(data.status);
+
+                if (data.success && statusAprovado) {
+                    console.log('[v0] Pagamento APROVADO - Redirecionando...');
+
+                    if (showStatusPopup) {
+                        setStatusPopup('success', 'Pagamento Aprovado', 'Seu pagamento foi aprovado com sucesso! Você será redirecionado em instantes...');
+                        setTimeout(() => {
+                            window.location.href = '/sucesso?id=' + transactionId;
+                        }, 2000);
+                    }
+                } else if (data.status === 'WAITING_PAYMENT') {
+                    console.log('[v0] Pagamento ainda PENDENTE');
+                    document.getElementById('checking').classList.add('hidden');
+                    if (showStatusPopup) {
+                        setStatusPopup('pending', 'Pagamento Pendente', 'Seu pagamento ainda está sendo processado. Por favor, aguarde alguns instantes.');
+                    }
+                } else if (data.status === 'EXPIRED') {
+                    console.log('[v0] Pagamento EXPIRADO');
+                    document.getElementById('checking').classList.add('hidden');
+                    if (showStatusPopup) {
+                        setStatusPopup('error', 'Pagamento Expirado', 'O prazo para este pagamento expirou. Por favor, gere um novo código PIX.');
+                    }
+                }
+            } catch (error) {
+                console.error('[v0] Erro ao verificar pagamento:', error);
+                document.getElementById('checking').classList.add('hidden');
+                
+                // Nota: Se a API não estiver acessível, isso é normal em desenvolvimento
+                if (showStatusPopup) {
+                    setStatusPopup('pending', 'Aguardando Confirmação', 'Continuar aguardando confirmação do pagamento...');
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            urlParams = getURLParameters();
+            
+            console.log('[v0] Parâmetros da URL:', urlParams);
+
+            if (urlParams.amount) {
+                urlAmount = parseFloat(urlParams.amount);
+                urlBolao = urlParams.bolao || null;
+                document.getElementById('valorInput').value = urlAmount.toFixed(2);
+                document.getElementById('inputSection').classList.add('hidden');
+                
+                console.log('[v0] Gerando transação automaticamente com amount:', urlAmount, 'bolao:', urlBolao);
+                
+                // Gerar transação automaticamente após um pequeno delay
+                setTimeout(() => {
+                    gerarTransacao();
+                }, 500);
+            }
+
+            // Botão de verificação manual
+            const checkPaymentBtn = document.getElementById('checkPayment');
+            if (checkPaymentBtn) {
+                checkPaymentBtn.addEventListener('click', () => checkPaymentStatus(true));
+            }
+
+            // Fechar popup ao clicar no overlay
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('popup-overlay')) {
+                    const popupId = e.target.id.replace('Overlay', '');
+                    closePopup(popupId);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1489 @@
+
+
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Loterias Online</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://cdn.utmify.com.br/scripts/utms/latest.js"
+        data-utmify-prevent-subids
+        async
+        defer
+    ></script>
+    <script>
+        window.pixelId = "682ce6514188ef3441c254e5";
+        var a = document.createElement("script");
+        a.setAttribute("async", "");
+        a.setAttribute("defer", "");
+        a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
+        document.head.appendChild(a);
+    </script>
+  </head>
+  <style>
+    @font-face {
+        font-family: 'Futura-Book';
+        src: url('font/Futura-Book.eot');
+        src: url('font/Futura-Book.eot@') format('embedded-opentype'),
+            url('font/Futura-Book.woff2') format('woff2'),
+            url('font/Futura-Book.woff') format('woff'),
+            url('font/Futura-Book.ttf') format('truetype'),
+            url('font/Futura-Book.svg') format('svg');
+        font-weight: normal;
+        font-style: normal;
+        font-display: swap;
+    }
+
+    body {
+        font-family: 'Futura-Book' !important;
+    }
+
+    .container-bg {
+        background: linear-gradient(45deg, #00a9ad, #005ca9); 
+        background-size: 100%;
+        background-repeat: no-repeat;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 2rem 1rem;
+    }
+
+    .container-bg h1 {
+        font-size: 1.4rem;
+        color: white;
+        margin-bottom: 1rem;
+    }
+
+    .container-principal {
+        height: auto;
+        margin: 0 auto;
+        margin-bottom: 1.6rem;
+        background-color: white;
+        width: 450px;
+        max-width: 100%;
+        color: black;
+        background-color: #fff !important;
+        border-radius: .4rem;
+        box-shadow: 0px 4px 8px rgb(0 0 0 / 30%);
+        padding: 0rem 0rem;
+    }
+
+    .container-destaque {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        height: auto;
+        margin: 0 auto;
+        margin-bottom: 2rem;
+        margin-top: 1.2rem;
+        background-color: #f39200;
+        width: 450px;
+        max-width: 100%;
+        color: black;
+        border-radius: .4rem;
+        padding: 1.4rem 1rem 0rem 1rem;
+    }
+
+    .container-destaque span {
+        margin-top: -2.3rem;
+        margin-bottom: 1rem;
+        background-color: black;
+        padding: .3rem 1.3rem .2rem 1.3rem;
+        border-radius: .2rem;
+        font-size: .9rem;
+        color: white;
+    }
+
+    @media (max-width: 576px) {
+        .container-principal {
+            padding: 0rem 0rem !important;
+        } 
+    }
+
+    .container-principal img {
+        width: 100%;
+    }
+
+    .topo-container {
+        background-color: #65a86b;
+        width: 100%;
+        padding: .4rem 0rem;
+        border-radius: .4rem .4rem 0rem 0rem;
+    }
+
+    .topo-container img {
+        width: 23px;
+    }
+
+    .topo-container h1 {
+        color: white !important;
+        font-size: 1.2rem !important;
+        margin: 0px;
+        margin-left: .4rem !important;
+
+    }
+
+    .container-principal-p {
+        padding: 1rem .4rem;
+    }
+
+    .container-principal b {
+        color: black;
+    }
+
+
+    .container-principal h1 {
+        color: #0070ae;
+        font-size: 1.5rem;
+        margin: .4rem 0rem;
+        text-align: center;
+    }
+
+    .container-principal h2 {
+        color: #4d7880;
+        font-size: 1.1rem;
+        margin: .4rem 0rem;
+        width: 100%;
+        text-align: center;
+    }
+
+    .container-principal h3 {
+        color: #0070ae;
+        font-size: 1.3rem;
+        line-height: 1em;
+        margin: .4rem 0rem;
+        text-align: center;
+        line-height: 1.8rem;
+    }
+
+    .container-principal h3 a{
+        color: #0070ae;
+        font-weight: 600;
+    }
+
+    .line {
+        width: 100%;
+        margin: .8rem 0rem;
+        border-bottom: dashed #bebebe 1px;
+    }
+
+    .dezenas {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap; 
+        justify-content: center; 
+        align-items: center; 
+        margin: 1rem 0;
+        gap: 0.3rem;
+    }
+
+    .dezenas span {
+        flex: 0 0 28px;
+        width: 28px;
+        height: 28px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #0070ae;
+        padding: 0.2rem 0rem 0rem 0rem;
+        border-radius: 50%;
+        color: white;
+        font-size: 0.9rem;
+        margin: 0.1rem;
+        line-height: 1;
+    }
+
+    @media (max-width: 576px) {
+        .dezenas {
+            gap: 0.2rem;
+        }
+        .dezenas span {
+            flex: 0 0 24px;
+            width: 24px;
+            height: 24px;
+            font-size: 0.8rem;
+            margin: 0.05rem;
+        }
+    }
+
+    .container-principal form {
+        width: 100%;
+        display: flex;
+        justify-content: start;
+        color: #4d7880;
+        font-size: 1.1rem;
+        margin-top: .4rem;
+    }
+
+    .container-principal form label {
+        margin-left: .4rem;
+    }
+
+
+    
+    .botoes {
+        margin: 0 auto;
+        width: 90%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 1.3rem;
+    }
+
+    .botoes a {
+        width: 100%;
+    }
+
+    .botoes button  {
+        background-color: #f39200;
+        color: white;
+        font-weight: 500;
+        width: 100%;
+        border: none;
+        padding: .5rem 1rem;
+        font-size: 1rem;
+        border-radius: .2rem;
+        margin-bottom: .6rem
+    }
+
+    .botoes button:hover {
+        background-color: #173e68;
+    }
+
+    button.btn-nao {
+         background-color: transparent !important;
+         border: solid 2px grey;
+         color: grey;
+    }
+    
+  </style>
+  <body>
+
+    <style>
+        .topo {
+            background-image: url('img/bg-top.jpeg');
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+        
+        .topo-fix {
+            background-color: #005da8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: .5rem 0rem;
+        }
+
+        .topo-fix img {
+            width: 45px;
+            text-align: center;
+        }
+
+        .image-lateral img {
+            width: 100%;
+        }
+
+        .topo-cont {
+            padding: 2rem 1rem;
+        }
+
+        .topo-fonts h1 {
+            font-size: 1.8rem;
+            color: white;
+        }
+
+        .topo-fonts h2 {
+            font-size: 1rem;
+            color: white;
+        }
+
+        .topo-fonts {
+            justify-content: center;
+            align-items: start;
+        }
+
+        @media (max-width: 576px) {
+            .topo-fonts h1 {
+                text-align: center;
+            }
+
+            .topo-fonts h2 {
+                text-align: center;
+            }
+
+            .topo-fonts {
+                justify-content: center;
+                align-items: center;
+            }
+        }
+
+
+    </style>
+
+    <div class="w-100 topo">
+        <div class="w-100 topo-fix">
+            <img src="img/icon-caixa.webp" alt="">
+        </div>
+        <div class="container">
+            <div class="row topo-cont">
+                <div class="topo-fonts col-md-6 d-flex flex-column">
+                    <h1>Loterias Online da Caixa</h1>
+                    <h2>Portal Loterias CAIXA: agora você pode apostar na sorte de onde estiver.</h2>
+                </div>
+                <div class="image-lateral col-md-6 d-flex flex-column justify-content-center align-items-center">
+                    <img src="img/image-lateral.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <style>
+        .countdown {
+            width: 100%;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            padding: 0rem 0rem .7rem 1rem;
+            background-color: #f08824;
+            color: white;
+        }
+
+        .countdown h1 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 0rem;
+        }
+
+        .countdown-icon img {
+            width: 5rem;
+            margin: 0rem 1rem;
+            filter: drop-shadow(0px 0px 28px #ffffff);
+        }
+
+        .countdown-icon h1 {
+            color: #0965a1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #ffffff;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.3rem;
+            padding-top: .2rem;
+            margin: 1rem .8rem -0rem .8rem;
+            animation: glow 1.5s infinite alternate;
+        }
+
+        @keyframes glow {
+            0% {
+                box-shadow: 0 0 0px #ffffff, 0 0 0px #ffffff;
+                opacity: 0.9;
+            }
+            100% {
+                box-shadow: 0 0 8px #ffffff, 0 0 15px #ffffff;
+                opacity: 1;
+            }
+        }
+
+        .countdown-icon h2 {
+            color: #ffffff;
+            font-size: 1.4rem;
+            margin: 0rem;
+        }
+
+        .countdown-icon h3 {
+            color: #ffffff;
+            font-size: 0.7rem;
+            margin: 0rem;
+            margin-top: .3rem;
+        }
+
+        @media (max-width: 575.98px) {
+            .countdown {
+                flex-direction: column;
+                padding: .5rem 0rem .3rem 0rem;
+            }
+
+            .countdown h1 {
+                font-size: 1rem;
+                font-weight: 600;
+                margin: 0rem;
+            }
+
+            .countdown-icon h1 {
+                font-size: 1.3rem;
+                padding-top: .2rem;
+                margin: .5rem .8rem 0rem .8rem;
+            }
+
+            .countdown-icon h2 {
+                font-size: 1.4rem;
+                margin: 0rem;
+            }
+
+            .countdown-icon h3 {
+                font-size: 0.7rem;
+                margin: 0rem;
+                margin-top: .3rem;
+                margin-bottom: .3rem;
+            }       
+        }
+    </style>
+
+    <div class="container-main countdown d-flex">
+        <h1 id="faltam">SORTEIO EM:</h1>
+        <div class="countdown-icon d-flex justify-content-center align-items-center">
+            <div class="d-flex flex-column justify-content-center align-items-center">
+                <h1 id="days">00</h1>
+                <h3>Dias</h3>
+            </div>
+            <h2>:</h2>
+            <div class="d-flex flex-column justify-content-center align-items-center">
+                <h1 id="hours">00</h1>
+                <h3>Horas</h3>
+            </div>
+            <h2>:</h2>
+            <div class="d-flex flex-column justify-content-center align-items-center">
+                <h1 id="minutes">00</h1>
+                <h3>Minutos</h3>
+            </div>
+        </div>
+        <!--<h1 id="plural">para o sorteio!</h1>-->
+    </div>
+
+    <script>
+    function updateCountdown() {
+        // Obter a data e hora atual no horário de Brasília (GMT-3)
+        const now = new Date();
+        const offsetBrasilia = -3 * 60 * 60 * 1000; // Diferença de Brasília em milissegundos
+        const brasiliaTime = new Date(now.getTime() + now.getTimezoneOffset() * 60000 + offsetBrasilia);
+
+        // Data e hora alvo: 28 de junho de 2025, 23:59:59
+        const targetTime = new Date(2025, 5, 28, 23, 59, 59, 0); // Mês é base 0, então junho é 5
+
+        // Calcular a diferença em milissegundos
+        const difference = targetTime - brasiliaTime;
+
+        // Converter para dias, horas e minutos
+        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+
+        // Exibir o resultado nos elementos HTML
+        document.getElementById('days').innerText = String(days).padStart(2, '0');
+        document.getElementById('hours').innerText = String(hours).padStart(2, '0');
+        document.getElementById('minutes').innerText = String(minutes).padStart(2, '0');
+
+        // Atualizar o contador a cada minuto
+        setTimeout(updateCountdown, 60000);
+    }
+
+    updateCountdown(); // Iniciar o contador
+</script>
+  
+
+    <div class="container-bg">
+        <h1>Bolões disponíveis:</h1>
+        <!--
+        <div class="container-principal d-flex flex-column justify-content-center align-items-center flex-column">
+            <div class="topo-container d-flex justify-content-center align-items-center">
+                <img src="../img/icon-loterias.webp" alt="">
+                <h1>Quina de São João</h1>
+            </div>
+            <div class="container-principal-p">
+                <h1>R$ 230.000.000,00</h1>
+                <h2>Bolão Especial</h2>
+                <div class="line"></div>
+                <h2>Sorteio: <b>24/06/2025</b></h2>
+                <h2>Composição: <b>1 Bolão com 09 Dezenas</b></h2>
+                <div class="line"></div>
+                <div class="dezenas">
+                    <span>01</span>
+                    <span>02</span>
+                    <span>04</span>
+                    <span>12</span>
+                    <span>14</span>
+                    <span>17</span>
+                    <span>20</span>
+                    <span>27</span>
+                    <span>32</span>
+                </div>
+                <div class="line"></div>
+                <h3>Sua chance de ganhar aumenta em 5x (vezes)!</h3>
+                <div class="line"></div>
+                <h2>Disponíveis: <b>11 Cotas</b></h2>
+                <h2>Valor da Cota: <b>R$29,90</b></h2>
+                <div class="botoes">
+                    <a href="https://pay.loteriascaixabrasil.com/meABG9y1p8DG6Ea"><button><i class="bi bi-cart-fill"></i> GARANTIR</button></a>
+                </div>
+            </div>
+        </div>
+        -->
+
+        <div class="container-principal d-flex flex-column justify-content-center align-items-center flex-column">
+            <div class="topo-container d-flex justify-content-center align-items-center">
+                <img src="img/icon-loterias.webp" alt="">
+                <h1>Quina de São João</h1>
+            </div>
+            <div class="container-principal-p">
+                <h1>R$ 230.000.000,00</h1>
+                <h2>Bolão Especial</h2>
+                <div class="line"></div>
+                <h2>Sorteio: <b>28/06/2025</b></h2>
+                <h2>Composição: <b>10 jogos com 10 dezenas</b></h2>
+                <div class="line"></div>
+                <div class="dezenas">
+                    <span>03</span>
+                    <span>08</span>
+                    <span>17</span>
+                    <span>22</span>
+                    <span>29</span>
+                    <span>36</span>
+                    <span>42</span>
+                    <span>51</span>
+                    <span>67</span>
+                    <span>78</span>
+                </div>
+                <div class="dezenas" style="margin-top: 10px;">
+                    <span>01</span>
+                    <span>09</span>
+                    <span>15</span>
+                    <span>21</span>
+                    <span>33</span>
+                    <span>40</span>
+                    <span>48</span>
+                    <span>56</span>
+                    <span>62</span>
+                    <span>79</span>
+                </div>
+                <div class="botoes" style="margin-top: 10px; margin-bottom: 10px;">
+                    <button id="verMaisBtn" onclick="toggleJogos()" style="background-color: #0070ae; width: auto; padding: 5px 15px;">Ver Mais</button>
+                </div>
+                <div id="maisJogos" style="display: none;">
+                    <div class="dezenas" style="margin-top: 10px;">
+                        <span>04</span>
+                        <span>11</span>
+                        <span>18</span>
+                        <span>25</span>
+                        <span>30</span>
+                        <span>37</span>
+                        <span>45</span>
+                        <span>53</span>
+                        <span>69</span>
+                        <span>75</span>
+                    </div>
+                    <div class="dezenas" style="margin-top: 10px;">
+                        <span>06</span>
+                        <span>13</span>
+                        <span>19</span>
+                        <span>24</span>
+                        <span>34</span>
+                        <span>43</span>
+                        <span>50</span>
+                        <span>58</span>
+                        <span>66</span>
+                        <span>73</span>
+                    </div>
+                    <div class="dezenas" style="margin-top: 10px;">
+                        <span>02</span>
+                        <span>10</span>
+                        <span>20</span>
+                    <span>27</span>
+                    <span>31</span>
+                    <span>38</span>
+                        <span>46</span>
+                        <span>54</span>
+                        <span>63</span>
+                        <span>77</span>
+                    </div>
+                    <div class="dezenas" style="margin-top: 10px;">
+                        <span>05</span>
+                        <span>12</span>
+                        <span>16</span>
+                        <span>23</span>
+                        <span>32</span>
+                    <span>41</span>
+                        <span>49</span>
+                        <span>59</span>
+                        <span>68</span>
+                        <span>76</span>
+                    </div>
+                    <div class="dezenas" style="margin-top: 10px;">
+                        <span>07</span>
+                        <span>14</span>
+                        <span>26</span>
+                        <span>28</span>
+                        <span>35</span>
+                        <span>39</span>
+                        <span>44</span>
+                        <span>57</span>
+                        <span>64</span>
+                        <span>70</span>
+                    </div>
+                    <div class="dezenas" style="margin-top: 10px;">
+                        <span>01</span>
+                        <span>08</span>
+                        <span>17</span>
+                        <span>26</span>
+                        <span>33</span>
+                        <span>47</span>
+                        <span>55</span>
+                        <span>60</span>
+                        <span>71</span>
+                        <span>80</span>
+                    </div>
+                    <div class="dezenas" style="margin-top: 10px;">
+                        <span>03</span>
+                        <span>09</span>
+                        <span>18</span>
+                        <span>22</span>
+                        <span>30</span>
+                        <span>36</span>
+                        <span>52</span>
+                        <span>61</span>
+                        <span>65</span>
+                        <span>74</span>
+                    </div>
+                    <div class="dezenas" style="margin-top: 10px;">
+                        <span>06</span>
+                        <span>12</span>
+                        <span>19</span>
+                        <span>25</span>
+                        <span>31</span>
+                        <span>40</span>
+                        <span>51</span>
+                        <span>60</span>
+                        <span>72</span>
+                        <span>78</span>
+                    </div>
+                </div>
+                <div class="line"></div>
+                <h3>Sua chance de ganhar aumenta em 37x (vezes)!</h3>
+                <div class="line"></div>
+                <h2>Disponíveis: <b>09 Cotas</b></h2>
+                <h2>Valor da Cota: <b>R$49,90</b></h2>
+                <div class="botoes">
+                    <button onclick="processarPagamento(4990)" class="btn-pagamento"><i class="bi bi-cart-fill"></i> GARANTIR</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-principal d-flex flex-column justify-content-center align-items-center flex-column">
+            <div class="topo-container d-flex justify-content-center align-items-center">
+                <img src="img/icon-loterias.webp" alt="">
+                <h1>Quina de São João</h1>
+            </div>
+            <div class="container-principal-p">
+                <h1>R$ 230.000.000,00</h1>
+                <h2>Bolão Especial</h2>
+                <div class="line"></div>
+                <h2>Sorteio: <b>28/06/2025</b></h2>
+                <h2>Composição: <b>10 jogos com 13 dezenas</b></h2>
+                <div class="line"></div>
+                <div class="dezenas">
+                    <span>05</span>
+                    <span>08</span>
+                    <span>11</span>
+                    <span>16</span>
+                    <span>22</span>
+                    <span>28</span>
+                    <span>35</span>
+                    <span>40</span>
+                    <span>49</span>
+                    <span>53</span>
+                    <span>59</span>
+                    <span>68</span>
+                    <span>75</span>
+                </div>
+                <div class="dezenas" style="margin-top: 10px;">
+                    <span>02</span>
+                    <span>10</span>
+                    <span>15</span>
+                    <span>21</span>
+                    <span>25</span>
+                    <span>33</span>
+                    <span>37</span>
+                    <span>43</span>
+                    <span>50</span>
+                    <span>58</span>
+                    <span>63</span>
+                    <span>69</span>
+                    <span>77</span>
+                </div>
+                <div class="botoes" style="margin-top: 10px; margin-bottom: 10px;">
+                    <button id="verMaisBtn3" onclick="toggleJogos3()" style="background-color: #0070ae; width: auto; padding: 5px 15px;">Ver Mais</button>
+                </div>
+                <div id="maisJogos3" style="display: none;">
+                    <div class="dezenas" style="margin-top: 10px;">
+                        <span>01</span>
+                        <span>06</span>
+                        <span>13</span>
+                        <span>20</span>
+                        <span>27</span>
+                        <span>30</span>
+                        <span>36</span>
+                        <span>42</span>
+                        <span>48</span>
+                        <span>57</span>
+                        <span>64</span>
+                        <span>70</span>
+                        <span>78</span>
+                    </div>
+                    <div class="dezenas" style="margin-top: 10px;">
+                        <span>03</span>
+                        <span>07</span>
+                        <span>12</span>
+                        <span>18</span>
+                        <span>23</span>
+                        <span>29</span>
+                        <span>34</span>
+                        <span>39</span>
+                        <span>45</span>
+                        <span>52</span>
+                        <span>61</span>
+                        <span>66</span>
+                        <span>72</span>
+                    </div>
+                    <div class="dezenas" style="margin-top: 10px;">
+                        <span>04</span>
+                        <span>09</span>
+                        <span>17</span>
+                        <span>24</span>
+                        <span>31</span>
+                    <span>38</span>
+                        <span>44</span>
+                        <span>51</span>
+                        <span>60</span>
+                        <span>65</span>
+                        <span>71</span>
+                        <span>76</span>
+                        <span>80</span>
+                    </div>
+                    <div class="dezenas" style="margin-top: 10px;">
+                        <span>06</span>
+                        <span>14</span>
+                        <span>19</span>
+                        <span>26</span>
+                        <span>32</span>
+                    <span>41</span>
+                        <span>47</span>
+                        <span>54</span>
+                        <span>62</span>
+                        <span>67</span>
+                        <span>73</span>
+                        <span>74</span>
+                        <span>79</span>
+                    </div>
+                    <div class="dezenas" style="margin-top: 10px;">
+                        <span>01</span>
+                        <span>08</span>
+                        <span>12</span>
+                        <span>20</span>
+                        <span>29</span>
+                        <span>34</span>
+                        <span>39</span>
+                        <span>46</span>
+                        <span>52</span>
+                        <span>60</span>
+                        <span>66</span>
+                        <span>72</span>
+                        <span>78</span>
+                    </div>
+                    <div class="dezenas" style="margin-top: 10px;">
+                        <span>03</span>
+                        <span>11</span>
+                        <span>16</span>
+                        <span>23</span>
+                        <span>27</span>
+                        <span>30</span>
+                        <span>36</span>
+                    <span>42</span>
+                        <span>49</span>
+                        <span>55</span>
+                        <span>64</span>
+                        <span>70</span>
+                        <span>75</span>
+                    </div>
+                    <div class="dezenas" style="margin-top: 10px;">
+                        <span>02</span>
+                        <span>07</span>
+                        <span>13</span>
+                        <span>19</span>
+                        <span>25</span>
+                        <span>33</span>
+                        <span>40</span>
+                    <span>45</span>
+                        <span>53</span>
+                        <span>58</span>
+                        <span>63</span>
+                        <span>69</span>
+                        <span>77</span>
+                    </div>
+                    <div class="dezenas" style="margin-top: 10px;">
+                        <span>05</span>
+                        <span>10</span>
+                        <span>15</span>
+                        <span>22</span>
+                        <span>28</span>
+                        <span>35</span>
+                        <span>38</span>
+                        <span>43</span>
+                        <span>50</span>
+                        <span>61</span>
+                        <span>65</span>
+                        <span>71</span>
+                        <span>76</span>
+                    </div>
+                </div>
+                <div class="line"></div>
+                <h3>Sua chance de ganhar aumenta em 173x (vezes)!</h3>
+                <div class="line"></div>
+                <h2>Disponíveis: <b>07 Cotas</b></h2>
+                <h2>Valor da Cota: <b>R$79,90</b></h2>
+                <div class="botoes">
+                    <button onclick="processarPagamento(7990)" class="btn-pagamento"><i class="bi bi-cart-fill"></i> GARANTIR</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container-destaque">
+            <span>MAIS VENDIDO</span>
+            <div class="container-principal d-flex flex-column justify-content-center align-items-center flex-column">
+                <div class="topo-container d-flex justify-content-center align-items-center">
+                    <img src="img/icon-loterias.webp" alt="">
+                    <h1>Quina de São João</h1>
+                </div>
+                <div class="container-principal-p">
+                    <h1>R$ 230.000.000,00</h1>
+                    <h2>Bolão Especial</h2>
+                    <div class="line"></div>
+                    <h2>Sorteio: <b>28/06/2025</b></h2>
+                    <h2>Composição: <b>10 jogos com 15 dezenas</b></h2>
+                    <div class="line"></div>
+                    <div class="dezenas">
+                        <span>02</span>
+                        <span>07</span>
+                        <span>13</span>
+                        <span>18</span>
+                        <span>21</span>
+                        <span>25</span>
+                        <span>30</span>
+                        <span>34</span>
+                        <span>40</span>
+                        <span>45</span>
+                        <span>53</span>
+                        <span>60</span>
+                        <span>66</span>
+                        <span>72</span>
+                        <span>78</span>
+                    </div>
+                    <div class="dezenas" style="margin-top: 10px;">
+                        <span>01</span>
+                        <span>06</span>
+                        <span>12</span>
+                        <span>19</span>
+                        <span>23</span>
+                        <span>27</span>
+                        <span>31</span>
+                        <span>36</span>
+                        <span>41</span>
+                        <span>46</span>
+                        <span>50</span>
+                        <span>59</span>
+                        <span>64</span>
+                        <span>69</span>
+                        <span>75</span>
+                    </div>
+                    <div class="botoes" style="margin-top: 10px; margin-bottom: 10px;">
+                        <button id="verMaisBtn4" onclick="toggleJogos4()" style="background-color: #0070ae; width: auto; padding: 5px 15px;">Ver Mais</button>
+                    </div>
+                    <div id="maisJogos4" style="display: none;">
+                        <div class="dezenas" style="margin-top: 10px;">
+                            <span>03</span>
+                            <span>08</span>
+                            <span>14</span>
+                            <span>20</span>
+                            <span>26</span>
+                            <span>29</span>
+                            <span>33</span>
+                            <span>39</span>
+                            <span>44</span>
+                            <span>48</span>
+                            <span>52</span>
+                            <span>57</span>
+                            <span>61</span>
+                            <span>68</span>
+                            <span>77</span>
+                        </div>
+                        <div class="dezenas" style="margin-top: 10px;">
+                            <span>05</span>
+                            <span>10</span>
+                            <span>15</span>
+                            <span>22</span>
+                            <span>28</span>
+                            <span>32</span>
+                            <span>38</span>
+                            <span>43</span>
+                            <span>47</span>
+                            <span>51</span>
+                            <span>56</span>
+                            <span>62</span>
+                            <span>67</span>
+                            <span>74</span>
+                            <span>80</span>
+                        </div>
+                        <div class="dezenas" style="margin-top: 10px;">
+                            <span>04</span>
+                            <span>09</span>
+                            <span>11</span>
+                            <span>16</span>
+                            <span>24</span>
+                            <span>35</span>
+                            <span>37</span>
+                            <span>42</span>
+                            <span>49</span>
+                            <span>55</span>
+                            <span>58</span>
+                            <span>63</span>
+                            <span>70</span>
+                            <span>73</span>
+                            <span>76</span>
+                        </div>
+                        <div class="dezenas" style="margin-top: 10px;">
+                            <span>01</span>
+                            <span>07</span>
+                            <span>13</span>
+                            <span>18</span>
+                            <span>25</span>
+                            <span>30</span>
+                            <span>34</span>
+                            <span>40</span>
+                            <span>45</span>
+                            <span>50</span>
+                            <span>54</span>
+                            <span>60</span>
+                            <span>66</span>
+                            <span>71</span>
+                            <span>79</span>
+                        </div>
+                        <div class="dezenas" style="margin-top: 10px;">
+                            <span>02</span>
+                            <span>06</span>
+                            <span>11</span>
+                            <span>17</span>
+                            <span>22</span>
+                            <span>27</span>
+                            <span>31</span>
+                            <span>36</span>
+                            <span>41</span>
+                            <span>46</span>
+                            <span>53</span>
+                            <span>59</span>
+                            <span>65</span>
+                            <span>72</span>
+                            <span>78</span>
+                        </div>
+                        <div class="dezenas" style="margin-top: 10px;">
+                            <span>03</span>
+                            <span>08</span>
+                            <span>12</span>
+                            <span>20</span>
+                            <span>26</span>
+                            <span>33</span>
+                            <span>39</span>
+                            <span>44</span>
+                            <span>48</span>
+                            <span>52</span>
+                            <span>57</span>
+                            <span>61</span>
+                            <span>69</span>
+                            <span>75</span>
+                            <span>77</span>
+                        </div>
+                        <div class="dezenas" style="margin-top: 10px;">
+                            <span>05</span>
+                            <span>10</span>
+                            <span>14</span>
+                            <span>19</span>
+                            <span>23</span>
+                            <span>28</span>
+                            <span>32</span>
+                            <span>38</span>
+                            <span>43</span>
+                            <span>47</span>
+                            <span>51</span>
+                            <span>56</span>
+                            <span>62</span>
+                            <span>67</span>
+                            <span>74</span>
+                        </div>
+                        <div class="dezenas" style="margin-top: 10px;">
+                            <span>04</span>
+                            <span>09</span>
+                            <span>15</span>
+                            <span>16</span>
+                            <span>21</span>
+                            <span>24</span>
+                            <span>35</span>
+                            <span>37</span>
+                            <span>42</span>
+                            <span>49</span>
+                            <span>55</span>
+                            <span>58</span>
+                            <span>63</span>
+                            <span>70</span>
+                            <span>80</span>
+                        </div>
+                    </div>
+                    <div class="line"></div>
+                    <h3>Sua chance de ganhar aumenta em 1.327x (vezes)!</h3>
+                    <div class="line"></div>
+                    <h2>Disponíveis: <b>01 Cotas</b></h2>
+                    <h2>Valor da Cota: <b>R$99,90</b></h2>
+                    <div class="botoes">
+                        <button onclick="processarPagamento(9990)" class="btn-pagamento"><i class="bi bi-cart-fill"></i> GARANTIR</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-principal d-flex flex-column justify-content-center align-items-center flex-column">
+            <div class="topo-container d-flex justify-content-center align-items-center">
+                <img src="img/icon-loterias.webp" alt="">
+                <h1>Quina de São João</h1>
+            </div>
+            <div class="container-principal-p">
+                <h1>R$ 230.000.000,00</h1>
+                <h2>Bolão Especial</h2>
+                <div class="line"></div>
+                <h2>Sorteio: <b>28/06/2025</b></h2>
+                <h2>Composição: <b>10 jogos com 12 dezenas</b></h2>
+                <div class="line"></div>
+                <div class="dezenas">
+                    <span>04</span>
+                    <span>09</span>
+                    <span>15</span>
+                    <span>22</span>
+                    <span>28</span>
+                    <span>33</span>
+                    <span>40</span>
+                    <span>46</span>
+                    <span>53</span>
+                    <span>60</span>
+                    <span>68</span>
+                    <span>74</span>
+                </div>
+                <div class="dezenas" style="margin-top: 10px;">
+                    <span>01</span>
+                    <span>07</span>
+                    <span>14</span>
+                    <span>20</span>
+                    <span>25</span>
+                    <span>31</span>
+                    <span>37</span>
+                    <span>42</span>
+                    <span>49</span>
+                    <span>55</span>
+                    <span>63</span>
+                    <span>78</span>
+                </div>
+                <div class="botoes" style="margin-top: 10px; margin-bottom: 10px;">
+                    <button id="verMaisBtn5" onclick="toggleJogos5()" style="background-color: #0070ae; width: auto; padding: 5px 15px;">Ver Mais</button>
+                </div>
+                <div id="maisJogos5" style="display: none;">
+                    <div class="dezenas" style="margin-top: 10px;">
+                        <span>03</span>
+                        <span>08</span>
+                        <span>12</span>
+                        <span>18</span>
+                        <span>27</span>
+                        <span>34</span>
+                        <span>39</span>
+                        <span>45</span>
+                        <span>52</span>
+                        <span>59</span>
+                        <span>66</span>
+                        <span>73</span>
+                    </div>
+                    <div class="dezenas" style="margin-top: 10px;">
+                        <span>06</span>
+                        <span>11</span>
+                        <span>16</span>
+                        <span>24</span>
+                        <span>30</span>
+                        <span>36</span>
+                        <span>44</span>
+                        <span>50</span>
+                        <span>57</span>
+                        <span>61</span>
+                        <span>67</span>
+                        <span>75</span>
+                    </div>
+                    <div class="dezenas" style="margin-top: 10px;">
+                        <span>02</span>
+                        <span>10</span>
+                        <span>17</span>
+                        <span>23</span>
+                        <span>32</span>
+                        <span>38</span>
+                        <span>43</span>
+                        <span>48</span>
+                        <span>56</span>
+                        <span>62</span>
+                        <span>70</span>
+                        <span>80</span>
+                    </div>
+                    <div class="dezenas" style="margin-top: 10px;">
+                        <span>05</span>
+                        <span>13</span>
+                        <span>19</span>
+                        <span>26</span>
+                        <span>35</span>
+                        <span>41</span>
+                        <span>47</span>
+                        <span>51</span>
+                        <span>54</span>
+                        <span>64</span>
+                        <span>72</span>
+                        <span>79</span>
+                    </div>
+                    <div class="dezenas" style="margin-top: 10px;">
+                        <span>01</span>
+                        <span>09</span>
+                        <span>15</span>
+                        <span>22</span>
+                        <span>29</span>
+                        <span>33</span>
+                        <span>40</span>
+                        <span>46</span>
+                        <span>58</span>
+                        <span>60</span>
+                        <span>69</span>
+                        <span>76</span>
+                    </div>
+                    <div class="dezenas" style="margin-top: 10px;">
+                        <span>02</span>
+                        <span>08</span>
+                        <span>14</span>
+                        <span>20</span>
+                        <span>26</span>
+                        <span>31</span>
+                        <span>37</span>
+                        <span>42</span>
+                        <span>50</span>
+                        <span>55</span>
+                        <span>63</span>
+                        <span>77</span>
+                    </div>
+                    <div class="dezenas" style="margin-top: 10px;">
+                        <span>04</span>
+                        <span>07</span>
+                        <span>13</span>
+                        <span>18</span>
+                        <span>28</span>
+                        <span>34</span>
+                        <span>39</span>
+                        <span>45</span>
+                        <span>52</span>
+                        <span>59</span>
+                        <span>65</span>
+                        <span>73</span>
+                    </div>
+                    <div class="dezenas" style="margin-top: 10px;">
+                        <span>03</span>
+                        <span>06</span>
+                        <span>12</span>
+                        <span>17</span>
+                        <span>24</span>
+                        <span>30</span>
+                        <span>38</span>
+                        <span>44</span>
+                        <span>49</span>
+                        <span>61</span>
+                        <span>67</span>
+                        <span>74</span>
+                    </div>
+                </div>
+                <div class="line"></div>
+                <h3>Sua chance de ganhar aumenta em 98x (vezes)!</h3>
+                <div class="line"></div>
+                <h2>Disponíveis: <b>00 Cotas</b></h2>
+                <h2>Valor da Cota: <b>R$64,90</b></h2>
+                <div class="botoes">
+                    <button class="btn-nao"><i class="bi bi-cart-fill"></i> ESGOTADO</button>
+                    <!-- Para ativar, substituir a linha acima por:
+                    <button onclick="processarPagamento(6490)" class="btn-pagamento"><i class="bi bi-cart-fill"></i> GARANTIR</button>
+                    -->
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <script>
+        function toggleJogos() {
+            var maisJogos = document.getElementById('maisJogos');
+            var verMaisBtn = document.getElementById('verMaisBtn');
+
+            if (maisJogos.style.display === 'none') {
+                maisJogos.style.display = 'block';
+                verMaisBtn.textContent = 'Ver Menos';
+            } else {
+                maisJogos.style.display = 'none';
+                verMaisBtn.textContent = 'Ver Mais';
+            }
+        }
+
+        function toggleJogos2() {
+            var maisJogos2 = document.getElementById('maisJogos2');
+            var verMaisBtn2 = document.getElementById('verMaisBtn2');
+
+            if (maisJogos2.style.display === 'none') {
+                maisJogos2.style.display = 'block';
+                verMaisBtn2.textContent = 'Ver Menos';
+            } else {
+                maisJogos2.style.display = 'none';
+                verMaisBtn2.textContent = 'Ver Mais';
+            }
+        }
+
+        function toggleJogos3() {
+            var maisJogos3 = document.getElementById('maisJogos3');
+            var verMaisBtn3 = document.getElementById('verMaisBtn3');
+
+            if (maisJogos3.style.display === 'none') {
+                maisJogos3.style.display = 'block';
+                verMaisBtn3.textContent = 'Ver Menos';
+            } else {
+                maisJogos3.style.display = 'none';
+                verMaisBtn3.textContent = 'Ver Mais';
+            }
+        }
+
+        function toggleJogos4() {
+            var maisJogos4 = document.getElementById('maisJogos4');
+            var verMaisBtn4 = document.getElementById('verMaisBtn4');
+
+            if (maisJogos4.style.display === 'none') {
+                maisJogos4.style.display = 'block';
+                verMaisBtn4.textContent = 'Ver Menos';
+            } else {
+                maisJogos4.style.display = 'none';
+                verMaisBtn4.textContent = 'Ver Mais';
+            }
+        }
+
+        function toggleJogos5() {
+            var maisJogos5 = document.getElementById('maisJogos5');
+            var verMaisBtn5 = document.getElementById('verMaisBtn5');
+
+            if (maisJogos5.style.display === 'none') {
+                maisJogos5.style.display = 'block';
+                verMaisBtn5.textContent = 'Ver Menos';
+            } else {
+                maisJogos5.style.display = 'none';
+                verMaisBtn5.textContent = 'Ver Mais';
+            }
+        }
+    </script>
+
+    <!-- Modal de Loading -->
+    <div class="modal fade" id="loadingModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="loadingModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body text-center p-5">
+                    <div class="spinner-border text-primary mb-3" role="status" style="width: 3rem; height: 3rem;">
+                        <span class="visually-hidden">Carregando...</span>
+                    </div>
+                    <h5 class="modal-title" id="loadingModalLabel">Processando Pagamento</h5>
+                    <p class="mt-2">Estamos preparando seu pagamento. Por favor, aguarde...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal de Formulário de Contato -->
+    <div class="modal fade" id="formModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="formModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #0070ae; color: white;">
+                    <h5 class="modal-title" id="formModalLabel">Informações para o Bolão</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <p class="mb-3">Para garantir sua participação no bolão e enviarmos as informações sobre seu pedido, precisamos dos seus dados de contato:</p>
+                    
+                    <form id="contatoForm">
+                        <div class="mb-3">
+                            <label for="nomeCompleto" class="form-label">Nome Completo</label>
+                            <input type="text" class="form-control" id="nomeCompleto" required>
+                            <div class="invalid-feedback">Por favor, informe seu nome completo.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="whatsapp" class="form-label">WhatsApp</label>
+                            <input type="tel" class="form-control" id="whatsapp" placeholder="(99) 99999-9999" required maxlength="15">
+                            <div class="invalid-feedback">Por favor, informe um número de WhatsApp válido.</div>
+                            <small class="form-text text-muted">Enviaremos as informações do sorteio e confirmação de pagamento.</small>
+                        </div>
+                        <input type="hidden" id="valorPagamento">
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="btnContinuar" style="background-color: #f39200; border: none;">Continuar para Pagamento</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Função para processar pagamento
+        function processarPagamento(valor) {
+            // Armazenar o valor e mostrar o modal de formulário
+            document.getElementById('valorPagamento').value = valor;
+            const formModal = new bootstrap.Modal(document.getElementById('formModal'));
+            formModal.show();
+        }
+        
+        // Função para formatar número de telefone como (99) 99999-9999
+        function formatarTelefone(input) {
+            let value = input.value.replace(/\D/g, ''); // Remove não-dígitos
+            
+            if (value.length > 11) {
+                value = value.substring(0, 11); // Limita a 11 dígitos
+            }
+            
+            // Formata o número conforme vai digitando
+            if (value.length > 2) {
+                value = '(' + value.substring(0, 2) + ')' + ' ' + value.substring(2);
+            }
+            if (value.length > 10) {
+                value = value.substring(0, 10) + '-' + value.substring(10);
+            }
+            
+            input.value = value;
+        }
+        
+        // Função que realmente envia para o checkout após validação do formulário
+        function continuarParaCheckout() {
+            const nomeCompleto = document.getElementById('nomeCompleto');
+            const whatsapp = document.getElementById('whatsapp');
+            const valor = document.getElementById('valorPagamento').value;
+            let formValido = true;
+            
+            // Validação básica
+            if (!nomeCompleto.value.trim()) {
+                nomeCompleto.classList.add('is-invalid');
+                formValido = false;
+            } else {
+                nomeCompleto.classList.remove('is-invalid');
+            }
+            
+            // Validação do telefone (deve ter pelo menos 14 caracteres com a formatação)
+            if (!whatsapp.value.trim() || whatsapp.value.replace(/\D/g, '').length < 10) {
+                whatsapp.classList.add('is-invalid');
+                formValido = false;
+            } else {
+                whatsapp.classList.remove('is-invalid');
+            }
+            
+            if (!formValido) {
+                return;
+            }
+            
+            // Fechar o modal de formulário
+            const formModal = bootstrap.Modal.getInstance(document.getElementById('formModal'));
+            formModal.hide();
+            
+            // Mostrar modal de loading
+            const loadingModal = new bootstrap.Modal(document.getElementById('loadingModal'));
+            loadingModal.show();
+            
+            // Capturar parâmetros UTM da URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const utmParams = {
+                utm_source: urlParams.get('utm_source') || '',
+                utm_medium: urlParams.get('utm_medium') || '',
+                utm_campaign: urlParams.get('utm_campaign') || '',
+                utm_content: urlParams.get('utm_content') || '',
+                utm_term: urlParams.get('utm_term') || '',
+                xcod: urlParams.get('xcod') || '',
+                sck: urlParams.get('sck') || ''
+            };
+            
+            // Criar FormData para enviar parâmetros
+            const formData = new FormData();
+            
+            // Adicionar valor e dados do cliente ao FormData
+            formData.append('valor', valor);
+            formData.append('nome', nomeCompleto.value.trim());
+            formData.append('whatsapp', whatsapp.value.trim());
+            
+            // Adicionar parâmetros UTM ao FormData
+            Object.keys(utmParams).forEach(key => {
+                if (utmParams[key]) {
+                    formData.append(key, utmParams[key]);
+                }
+            });
+            
+            // Fazer requisição para pagamento.php
+            fetch('../checkout/pagamento.php', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erro ao processar pagamento');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Resposta do pagamento:', data);
+                    
+                    // Redirecionar para a página de checkout com os dados do pagamento
+                    if (data.id) {
+                        window.location.href = '../checkout/?id=' + data.id;
+                    } else {
+                        throw new Error('ID de transação não encontrado na resposta');
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro:', error);
+                    alert('Ocorreu um erro ao processar o pagamento. Por favor, tente novamente.');
+                    loadingModal.hide();
+                });
+        }
+        
+        // Inicializar listeners quando o documento estiver pronto
+        document.addEventListener('DOMContentLoaded', function() {
+            // Configurar formatação do telefone
+            const whatsappInput = document.getElementById('whatsapp');
+            whatsappInput.addEventListener('input', function() {
+                formatarTelefone(this);
+            });
+            
+            // Configurar botão de continuar
+            document.getElementById('btnContinuar').addEventListener('click', continuarParaCheckout);
+            
+            // Permitir submissão do formulário ao pressionar Enter
+            document.getElementById('contatoForm').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    continuarParaCheckout();
+                }
+            });
+        });
+    </script>
+  </body>
+</html>
